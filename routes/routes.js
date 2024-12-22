@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/users', (req, res) => {
-    res.send('<h1>All Users</h1>');
+router.get('/', (req, res) => {
+    res.render('index', {title: "Home Page"});
+});
+
+router.get('/add', (req, res) => {
+    res.render('add_users', {title: "Add User"});
 });
 
 module.exports = router;
