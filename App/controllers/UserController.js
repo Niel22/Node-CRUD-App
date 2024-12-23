@@ -6,13 +6,24 @@ const DeleteUser = require('../Actions/Users/DeleteUser');
 const fs = require('fs');
 
 class UserController {
+
   async index(req, res) {
     const users = await FetchAllUser.execute();
 
+    if(users){
+
+      
+      return res.render("users/index", {
+        title: "Home Page",
+        users: users,
+      });
+    }
+    
     return res.render("users/index", {
       title: "Home Page",
-      users: users,
+      users: '',
     });
+
   }
 
   async create(req, res) {
@@ -90,6 +101,7 @@ class UserController {
 
     return res.redirect('/');
   }
+  
 }
 
 module.exports = new UserController();

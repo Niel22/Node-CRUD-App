@@ -2,10 +2,10 @@
   "name": "crud",
   "version": "1.0.0",
   "description": "First project in nodejs developing a crud app",
-  "main": "server.js",
+  "main": "public/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start" : "nodemon app.js"
+    "start": "nodemon public/server.js"
   },
   "author": "NIEL",
   "license": "ISC",

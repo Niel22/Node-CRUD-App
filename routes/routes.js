@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const upload = require('../middleware/imageUpload');
-const UserController = require('../controllers/UserController');
+const upload = require('../App/middleware/imageUpload');
+const UserController = require('../App/controllers/UserController');
 
 
 router.get("/", UserController.index);
