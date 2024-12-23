@@ -30,7 +30,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(express.static("uploads"));
+app.use(express.static("public/assets/img/uploads"));
 
 app.set('view engine', 'ejs');
 
