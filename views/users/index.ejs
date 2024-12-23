@@ -4,7 +4,7 @@
     <div class="row my-4">
         <div class="col-lg-12">
             <% if (message) { %>
-             <div class="alert alert-dismissable fade show alert-<%= message.type %>" role="alert">
+             <div class="alert alert-dismissable fade show alert-<%= message.type %> d-flex justify-content-between" role="alert">
                  <strong><%= message.message%></strong>
                  <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="close"></button>
              </div>

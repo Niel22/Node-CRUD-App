@@ -1,6 +1,8 @@
 const CreateUser = require("../Actions/Users/CreateUser");
 const FetchAllUser = require("../Actions/Users/FetchAlUser");
 const FetchSingleUser = require('../Actions/Users/FetchSingleUser');
+const UpdateUser = require('../Actions/Users/UpdateUser');
+const DeleteUser = require('../Actions/Users/DeleteUser');
 const fs = require('fs');
 
 class UserController {
@@ -26,7 +28,7 @@ class UserController {
 
       return res.redirect("/");
     }
-    
+
     req.session.message = {
       type: "danger",
       message: "Problem occured while trying to create user",
@@ -53,74 +55,40 @@ class UserController {
   }
 
   async update(req, res) {
-    try {
-      let id = req.params.id;
-      let new_image = "";
-
-      const user = await User.findById(id);
-
-      if (req.file) {
-        new_image = req.file.filename;
-
-        try {
-          fs.unlinkSync("./public/assets/img/uploads" + user.image);
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        new_image = user.image;
+    
+    if(await UpdateUser.execute(req)){
+      req.session.message = {
+        type: 'success',
+        message: "User Details Updated"
       }
-
-      await User.findByIdAndUpdate(id, {
-        name: req.body.name,
-        email: req.body.email,
-        phone: req.body.phone,
-        image: new_image,
-      });
-
-      req.session.message = {
-        type: "success",
-        message: "User updated",
-      };
-
-      res.redirect("/");
-    } catch (error) {
-      req.session.message = {
-        type: "danger",
-        message: "User not found",
-      };
-
-      res.redirect("/");
+      
+      return res.redirect('/');
     }
+    
+    req.session.message = {
+      type: 'danger',
+      message: "Cannot Update User"
+    }
+    return res.redirect('/');
   }
 
   async delete(req, res) {
-    try {
-      let id = req.params.id;
-      const user = await User.findByIdAndDelete(id);
+    
+    if(await DeleteUser.execute(req)){
 
-      if (user && user.image != "") {
-        try {
-          fs.unlinkSync("./public/assets/img/uploads/" + user.image);
-        } catch (error) {
-          console.log(error);
-        }
+      req.session.message = {
+        type: 'success',
+        message: "User Deleted"
       }
-
-      req.session.message = {
-        type: "success",
-        message: "User deleted",
-      };
-
-      res.redirect("/");
-    } catch (error) {
-      req.session.message = {
-        type: "danger",
-        message: "User not found",
-      };
-
-      res.redirect("/");
+      return res.redirect('/');
     }
+
+    req.session.message = {
+      type: 'danger',
+      message: "Problem deleting user"
+    }
+
+    return res.redirect('/');
   }
 }
 
